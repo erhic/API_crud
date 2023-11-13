@@ -1,4 +1,5 @@
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
 
@@ -19,8 +20,9 @@ router.get("/", (req, res) => res.send(users));
 router.post("/", (req, res) => {
   console.log(req.body);
   const usr = req.body;
-  users.push(usr);
-  console.log(usr + "users added");
+  // const userId = uuidv4();
+  // const userWithId = {...usr,id:userId}
+  users.push({ ...usr, id: uuidv4() }); // this is refactoring of above lines of codes
 
   res.send(`User with name ${usr.firstName} successfully added!`);
 });
