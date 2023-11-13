@@ -1,41 +1,23 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
+
+import {
+  createUser,
+  getUser,
+  deleteUser,
+  updateUser,
+  getUsers,
+} from "../controllers/user.js";
 
 const router = express.Router();
 
-let users = [];
+router.get("/", getUsers);
 
-router.get("/", (req, res) => res.send(users));
+router.post("/", createUser);
 
-router.post("/", (req, res) => {
-  console.log(req.body);
-  const usr = req.body;
-  // const userId = uuidv4();
-  // const userWithId = {...usr,id:userId}
-  users.push({ ...usr, id: uuidv4() }); // this is refactoring of above lines of codes
+router.get("/:id", getUser);
 
-  res.send(`User with name ${usr.firstName} successfully added!`);
-});
+router.delete("/:id", deleteUser);
 
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  console.log(req.params);
-  const foundUser = users.find((usrs) => usrs.id === id);
-  res.send(foundUser);
-});
+router.patch("/:id", updateUser);
 
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  users = users.filter((user) => user.id != id);
-  res.send(`User with id ${id} deleted Successfuly`);
-});
-
-router.patch("/:id", (req, res) => {
-  const { id } = req.params;
-  const { firstName, lastName, age } = req.body;
-  const user = users.find((user) => user.id === id);
-  if (firstName) user.firstName = firstName;
-  if (lastName) user.lastName = lastName;
-  if (age) user.age = age;
-});
 export default router;
