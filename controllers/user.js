@@ -31,5 +31,5 @@ export const updateUser = (req, res) => {
   if (lastName) user.lastName = lastName;
   if (age) user.age = age;
 
-  res.send(`User with ${id} updated Successfully!!`);
+  res.send(`User with ${id} and ${firstName} updated Successfully!!`);
 };
